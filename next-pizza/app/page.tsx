@@ -1,4 +1,5 @@
 import { Container, Filters, Title, TopBar } from "@/components/shared";
+import { ProductCard } from "@/components/shared/product-card";
 
 export default function Home() {
     return (
@@ -16,7 +17,7 @@ export default function Home() {
                     {/* Список товаров */}
                     <div className="flex-1">
                         <div className="flex flex-col gap-16">
-                            
+                            <ProductCard id={0} name={"ЧИзбургер-пицца"} price={550} imageUrl="https://dodobrands.io/img/webp/pizza-dodomix.webp" />
                         </div>
                     </div>
                 </div>
