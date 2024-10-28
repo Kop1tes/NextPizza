@@ -20,7 +20,7 @@ export const ProductCard: React.FC<Props> = ({id, name, price, imageUrl, classNa
                     <img className='w-[215px] h-[215px]' src={imageUrl} alt="Logo" />
                 </div>
 
-                <Title text="name" size='sm' className='mb-1 mt-3 font-bold' />
+                <Title text={name} size='sm' className='mb-1 mt-3 font-bold' />
 
                 <p className='text-sm text-gray-400'>
                     Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус альфредо, чеснок
