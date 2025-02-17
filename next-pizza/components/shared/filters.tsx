@@ -2,12 +2,13 @@
 
 import React from 'react'
 import { Title } from './title';
-import { FilterCheckbox } from './filter-checkbox';
 import { Input } from '../ui';
 import { RangeSlider } from '../ui/range-slider';
 import { CheckboxFiltersGroup } from './checkbox-filters-group';
 import { useFilterIngredients } from '@/hooks/useFiltersIngredients';
 import { useSet } from 'react-use';
+import qs from "qs";
+import { useRouter } from 'next/navigation';
 
 interface Props {
     className?: string;
@@ -19,7 +20,8 @@ interface PriceProps {
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
-    const { ingredients, loading, onAddId, selectedIds } = useFilterIngredients();
+    const router = useRouter();
+    const { ingredients, loading, onAddId, selectedIngredients} = useFilterIngredients();
 
     const [sizes, {toggle: toggleSizes}] = useSet(new Set<string>([]));
     const [pizzaTypes, {toggle: togglePizzaTypes}] = useSet(new Set<string>([]));
@@ -34,6 +36,23 @@ export const Filters: React.FC<Props> = ({ className }) => {
             [name]: value,
         })
     }
+
+    
+
+    React.useEffect(() => {
+        const filters = {
+            ...prices,
+            pizzaTypes: Array.from(pizzaTypes),
+            sizes: Array.from(sizes),
+            ingredients: Array.from(selectedIngredients),
+        }
+        
+        const query = qs.stringify(filters, {
+            arrayFormat: 'comma',
+        })
+
+        router.push(`?${query}`)
+    }, [prices, pizzaTypes, sizes, selectedIngredients])
 
     return (
         <div className={className}>
@@ -100,7 +119,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
                 items={items}
                 loading={loading}
                 onClickCheckbox={onAddId}
-                selected={selectedIds}
+                selected={selectedIngredients}
             />
         </div>
     );
