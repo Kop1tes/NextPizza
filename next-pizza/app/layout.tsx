@@ -1,18 +1,5 @@
-import type { Metadata } from "next";
 import {Nunito} from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/shared/header";
-
-// const geistSans = localFont({
-//   src: "./fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
 
 const nunito = Nunito({
   subsets: ['cyrillic'],
@@ -20,23 +7,17 @@ const nunito = Nunito({
   weight: ['400', '500', '600', '700', '800', '900'],
 });
 
-export const metadata: Metadata = {
-  title: "Next Pizza | Главная",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={nunito.className}>
-        <main className="min-h-screen">
-          <Header />
-          {children}
-        </main>
-      </body>
+      <html lang="en">
+          <head>
+              <link data-rh="true" rel="icon" href="/logo.png" />
+          </head>
+      <body className={nunito.className}>{children}</body>
     </html>
   );
 }
