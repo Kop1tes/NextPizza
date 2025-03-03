@@ -7,6 +7,6 @@ export { Filters } from './filters';
 export { FilterCheckbox } from './filter-checkbox';
 export { CheckboxFiltersGroup } from './checkbox-filters-group';
 export { SearchInput } from './search-input';
-export { ProductImage } from './pizza-image';
-export { ChoosePizzaForm } from './choose-product-form';
+export { PizzaImage} from './pizza-image';
+export { ChooseProductForm } from './choose-product-form';
 export * from './modals';
