@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 
 import {
@@ -12,12 +14,14 @@ import {
 import Link from 'next/link';
 import { Button } from '../ui';
 import { ArrowRight } from 'lucide-react';
+import { CartDrawerItem } from './cart-drawer-item';
+import { getCartItemDetails } from '@/shared/lib';
 
 interface Props {
     className?: string;
 }
 
-export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, className}) => {
+export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children, className }) => {
     return (
         <Sheet>
             <SheetTrigger asChild>{children}</SheetTrigger>
@@ -29,7 +33,18 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, 
                     </SheetTitle>
                 </SheetHeader>
 
-                {/** Items */}
+                <div className='-mx-6 mt-5 overflow-auto flex-1'>
+                    <div className='mb-2'>
+                        <CartDrawerItem
+                            id={1}
+                            imageUrl={'http://localhost:3000/pizza/11EE7D61706D472F9A5D71EB94149304.webp'}
+                            details={getCartItemDetails(2, 30, [{ name: 'Цыпленок' }, { name: 'Сыр' }])}
+                            name={'Чоризо фреш'}
+                            price={419}
+                            quantity={1}
+                        />
+                    </div>
+                </div>
 
                 <SheetFooter className='-mx-6 bg-white p-8'>
                     <div className='w-full'>
@@ -40,7 +55,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, 
                                 <div className='flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2'></div>
                             </span>
 
-                             <span className='font-bold text-lg'>500 ₴</span>
+                            <span className='font-bold text-lg'>500 ₴</span>
                         </div>
                         
                         <Link href="/cart">
@@ -57,4 +72,4 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({children, 
             </SheetContent>
         </Sheet>
     )
-}
+};
