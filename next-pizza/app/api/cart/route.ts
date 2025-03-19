@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
                     {
                         token,
                     },
-                ]
+                ],
             },
             include: {
                 items: {
@@ -39,3 +39,4 @@ export async function GET(req: NextRequest) {
         console.log(error)
     }
 }
+
