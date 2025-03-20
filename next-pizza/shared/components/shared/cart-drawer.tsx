@@ -1,11 +1,10 @@
 'use client';
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -24,15 +23,29 @@ interface Props {
 }
 
 export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
-    const [totalAmount, fetchCartItems, items] = useCartStore((state) => [
-        state.totalAmount,
-        state.fetchCartItems,
-        state.items,
-    ]);
+    const totalAmount = useCartStore((state) => state.totalAmount);
+    const fetchCartItems = useCartStore((state) => state.fetchCartItems);
+    const items = useCartStore((state) => state.items);
 
-    React.useEffect(() => {
-        fetchCartItems();
-    }, []);
+    //  const [totalAmount, items, loading] = useCartStore((state) => [
+    //     state.totalAmount,
+    //     state.items,
+    //     state.loading,
+    //   ]);
+
+
+    useEffect(() => {
+        if (items.length === 0) {
+            fetchCartItems();
+        }
+    }, [items.length, fetchCartItems]);
+    
+    // useEffect(() => {
+    // }, []);
+
+    const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
+        console.log(id, quantity, type)
+    }
     
     return (
         <Sheet>
@@ -57,6 +70,7 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children 
                                     name={item.name}
                                     price={item.price}
                                     quantity={item.quantity}
+                                    onCLickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
                                 />
                             ))
                         }
@@ -89,4 +103,4 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children 
             </SheetContent>
         </Sheet>
     )
-}
+};

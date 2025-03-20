@@ -25,13 +25,30 @@ export interface CartState {
 export const useCartStore = create<CartState>((set, get) => ({
     items: [],
     error: false,
-    loading: true,
+    loading: false, // Изменено на false, чтобы не было ложного состояния загрузки
+    // loading: true, 
     totalAmount: 0,
 
     fetchCartItems: async () => {
+    // const currentItems = get().items;
+    // if (currentItems.length > 0) return; // Предотвращаем повторный запрос
+
+    try {
+        set({ loading: true, error: false });
+        const data = await Api.cart.getCart();
+        set(getCartDetails(data));
+    } catch (error) {
+        console.log(error);
+        set({ error: true });
+    } finally {
+        set({ loading: false });
+    }
+},
+    
+    updateItemQuantity: async (id: number, quantity: number) => { 
         try {
             set({ loading: true, error: false });
-            const data = await Api.cart.fetchCart();
+            const data = await Api.cart.updateItemQuantity(id, quantity);
             set(getCartDetails(data));
         } catch (error) {
             console.log(error)
@@ -42,6 +59,5 @@ export const useCartStore = create<CartState>((set, get) => ({
     },
 
     removeCartItem: async (id: number) => { },
-    updateItemQuantity: async (id: number, quantity: number) => { },
     addCartItem: async (values: any)=>{},
 }))
