@@ -4,6 +4,8 @@ import crypto from 'crypto';
 import { findOrCreateCart } from "@/shared/lib";
 import { CreateCartItemValues } from "@/shared/services/dto/cart.dto";
 import { updateCartTotalAmount } from "@/shared/lib/update-cart-total-amount";
+import { IngredientItem } from "@/shared/components/shared";
+import { _ingredients } from "@/prisma/constants";
 
 export async function GET(req: NextRequest) {
     try {
@@ -75,13 +77,21 @@ export async function POST(req: NextRequest) {
                     quantity: findCartItem.quantity + 1,
                 },
             });
-
-            const updatedUserCart = await updateCartTotalAmount(token);
-
-            const resp = NextResponse.json(updatedUserCart);
-            resp.cookies.set('cartToken', token)
-            return resp;
         }
+        await prisma.cartItem.create({
+            data: {
+                cartId: userCart.id,
+                productItemId: data.productItemId,
+                quantity: 1,
+                ingredients: { connect: data.ingredients?.map((id) => ({ id })) },
+            },
+        });
+
+        const updatedUserCart = await updateCartTotalAmount(token);
+        
+        const resp = NextResponse.json(updatedUserCart);
+        resp.cookies.set('cartToken', token)
+        return resp;
     } catch (error) {
         console.log('[CART_POST] Server error', error)
         return NextResponse.json({ message: 'Не удалось создать корзину' }, { status: 500 });
