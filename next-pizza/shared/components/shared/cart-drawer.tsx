@@ -23,13 +23,13 @@ interface Props {
 }
 
 export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children, className }) => {
- const [totalAmount, items, fetchCartItems, updateItemQuantity, removeCartItem] = useCartStore((state) => [
+    const [totalAmount, items, fetchCartItems, updateItemQuantity, removeCartItem] = useCartStore((state) => [
         state.totalAmount,
         state.items,
         state.fetchCartItems,
         state.updateItemQuantity,
         state.removeCartItem,
-      ]);
+    ]);
 
     
     React.useEffect(() => {
@@ -53,23 +53,22 @@ export const CartDrawer: React.FC<React.PropsWithChildren<Props>> = ({ children,
                 </SheetHeader>
 
                 <div className='-mx-6 mt-5 overflow-auto flex-1'>
-                    <div className='mb-2'>
                         {
                             items.map((item) => (
-                                <CartDrawerItem
-                                    key={item.id}
-                                    id={item.id}
-                                    imageUrl={item.imageUrl}
-                                    details={item.pizzaSize && item.pizzaType ? getCartItemDetails(item.ingredients, item.pizzaType as PizzaType, item.pizzaSize as PizzaSize) : ''}
-                                    name={item.name}
-                                    price={item.price}
-                                    quantity={item.quantity}
-                                    onCLickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
-                                    onClickRemove={()=> removeCartItem(item.id)}
-                                />
+                                <div key={item.id} className='mb-2'>
+                                    <CartDrawerItem
+                                        id={item.id}
+                                        imageUrl={item.imageUrl}
+                                        details={item.pizzaSize && item.pizzaType ? getCartItemDetails(item.ingredients, item.pizzaType as PizzaType, item.pizzaSize as PizzaSize) : ''}
+                                        name={item.name}
+                                        price={item.price}
+                                        quantity={item.quantity}
+                                        onCLickCountButton={(type) => onClickCountButton(item.id, item.quantity, type)}
+                                        onClickRemove={() => removeCartItem(item.id)}
+                                    />
+                                </div>
                             ))
                         }
-                    </div>
                 </div>
 
                 <SheetFooter className='-mx-6 bg-white p-8'>
