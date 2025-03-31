@@ -18,6 +18,7 @@ interface Props {
     name: string;
     ingredients: Ingredient[];
     items: ProductItem[];
+    loading?: boolean;
     onSubmit: (itemId: number, ingredients: number[]) => void;
     className?: string;
 }
@@ -27,6 +28,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
     items,
     imageUrl,
     ingredients,
+    loading,
     onSubmit,
     className,
 }) => {
