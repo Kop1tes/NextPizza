@@ -37,7 +37,7 @@ export const ChooseProductModal: React.FC<Props> = ({ product, className }) => {
             })
             
 
-            toast.success(product.name + 'добавлена в корзину');
+            toast.success(product.name + ' добавлен в корзину');
             router.back();
         } catch (error) {
             toast.error('Не удалось добавить товар в корзину');
