@@ -4,7 +4,6 @@ import crypto from 'crypto';
 import { findOrCreateCart } from "@/shared/lib";
 import { CreateCartItemValues } from "@/shared/services/dto/cart.dto";
 import { updateCartTotalAmount } from "@/shared/lib/update-cart-total-amount";
-import { IngredientItem } from "@/shared/components/shared";
 import { _ingredients } from "@/prisma/constants";
 
 export async function GET(req: NextRequest) {
@@ -63,8 +62,14 @@ export async function POST(req: NextRequest) {
             where: {
                 cartId: userCart.id,
                 productItemId: data.productItemId,
-                ingredients: { every: { id: { in: data.ingredients } } },
-                
+                AND: [
+                    {
+                        ingredients: data.ingredients ? { every: { id: { in: data.ingredients } } } : undefined,
+                    },
+                ],
+            },
+            include: {
+                ingredients: true,
             }
         })
 
@@ -77,8 +82,8 @@ export async function POST(req: NextRequest) {
                     quantity: findCartItem.quantity + 1,
                 },
             });
-        }
-        await prisma.cartItem.create({
+        } else {
+            await prisma.cartItem.create({
             data: {
                 cartId: userCart.id,
                 productItemId: data.productItemId,
@@ -86,6 +91,9 @@ export async function POST(req: NextRequest) {
                 ingredients: { connect: data.ingredients?.map((id) => ({ id })) },
             },
         });
+        }
+
+        
 
         const updatedUserCart = await updateCartTotalAmount(token);
         
