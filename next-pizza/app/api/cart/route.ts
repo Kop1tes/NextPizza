@@ -62,16 +62,13 @@ export async function POST(req: NextRequest) {
             where: {
                 cartId: userCart.id,
                 productItemId: data.productItemId,
-                AND: [
-                    {
-                        ingredients: data.ingredients ? { every: { id: { in: data.ingredients } } } : undefined,
+                ingredients: {
+                    every: {
+                        id: { in: data.ingredients },
                     },
-                ],
+                },
             },
-            include: {
-                ingredients: true,
-            }
-        })
+        });
 
         if (findCartItem) {
             await prisma.cartItem.update({
