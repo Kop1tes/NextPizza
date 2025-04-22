@@ -16,4 +16,7 @@ export { CountButton } from './count-button';
 export { CountIconButton } from './count-icon-button';
 export { ProductsGroupList } from './products-group-list';
 export { ProductForm } from './product-form';
+export { WhiteBlock } from './whtie-block';
+export { CheckoutItemDetails } from './checkout-item-details';
+export {CheckoutItem} from './checkout-item'
 export * from './modals';
