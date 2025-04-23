@@ -19,7 +19,7 @@ export const categories = [
 export const _ingredients = [
         {
     name: 'Сырный бортик',
-    price: 179,
+    price: 59,
     imageUrl: '/ingredients/99f5cb91225b4875bd06a26d2e842106.png',
   },
   {
