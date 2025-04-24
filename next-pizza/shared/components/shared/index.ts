@@ -18,6 +18,11 @@ export { ProductsGroupList } from './products-group-list';
 export { ProductForm } from './product-form';
 export { WhiteBlock } from './whtie-block';
 export { CheckoutItemDetails } from './checkout-item-details';
-export { CheckoutItem } from './checkout-item'
-export { CheckoutItemSkeleton } from './checkout-item-skeleton'
+export { CheckoutItem } from './checkout-item';
+export { CheckoutItemSkeleton } from './checkout-item-skeleton';
+export { CheckoutSidebar } from './checkout-sidebar';
+export { RequiredSymbol } from './required-symbol';
+export { ErrorText } from './error-text';
+export { ClearButton } from './clear-button';
+export * from './form';
 export * from './modals';
