@@ -1,17 +1,15 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import { useFormContext } from 'react-hook-form';
+import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
-  name: string;
+  value: string;
+  onChange: (value: string) => void;
   placeholder?: string;
 }
 
-export const AddressAutocomplete: React.FC<Props> = ({ name, placeholder }) => {
-  const { setValue, watch } = useFormContext();
-  const value = watch(name);
+export const AddressAutocomplete: React.FC<Props> = ({ value, onChange, placeholder }) => {
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [isFocused, setIsFocused] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,7 +25,6 @@ export const AddressAutocomplete: React.FC<Props> = ({ name, placeholder }) => {
         const response = await axios.get('https://photon.komoot.io/api/', {
           params: {
             q: value,
-            // lang: 'ru',
             limit: 5,
             bbox: '30.30,50.30,30.80,50.60',
           },
@@ -58,7 +55,7 @@ export const AddressAutocomplete: React.FC<Props> = ({ name, placeholder }) => {
     const address = suggestion.properties.name + 
       (suggestion.properties.city ? `, ${suggestion.properties.city}` : '') +
       (suggestion.properties.country ? `, ${suggestion.properties.country}` : '');
-    setValue(name, address);
+    onChange(address);
     setSuggestions([]);
     setIsFocused(false);
   };
@@ -68,7 +65,7 @@ export const AddressAutocomplete: React.FC<Props> = ({ name, placeholder }) => {
       <input
         type="text"
         value={value}
-        onChange={(e) => setValue(name, e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         onFocus={() => setIsFocused(true)}
         placeholder={placeholder || 'Введите адрес'}
         className="w-full p-3 border rounded-md"
