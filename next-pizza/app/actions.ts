@@ -72,8 +72,12 @@ export async function createOrder(data:CheckoutFormValues) {
             },
         });
 
-        sendEmail(data.email, 'NextPizza / оплатите заказ №' + order.id, PayOrderTemplate);
+        await sendEmail(data.email, 'NextPizza / оплатите заказ №' + order.id, PayOrderTemplate({
+            orderId: order.id,
+            totalAmount: order.totalAmount,
+            paymentUrl: 'https://github.com/Kop1tes',
+        }));
     } catch (error) {
-        console.log(error)
+        console.log('[CreateOrder] Server error', error)
     }
 }

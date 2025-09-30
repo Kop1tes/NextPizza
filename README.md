@@ -15,4 +15,7 @@ export const Categories: React.FC<Props> = ({className}) => {
 
         </div>
     )
-} -->
+}
+
+₴
+-->
