@@ -1,3 +1,6 @@
+'use client';
+
+import React from 'react';
 import { useFormContext, Controller } from "react-hook-form";
 import { AddressAutocomplete } from "../address-autocomplete";
 import { WhiteBlock } from "../whtie-block";
@@ -19,7 +22,7 @@ export const CheckoutAddressForm: React.FC<Props> = ({ className }) => {
                     render={({ field, fieldState }) => (
                         <>
                             <AddressAutocomplete
-                                value={field.value}
+                                value={field.value ?? ""}
                                 onChange={field.onChange}
                                 placeholder="Введите адрес"
                             />

@@ -1,4 +1,4 @@
-'use cliant';
+'use client';
 
 import React from "react";
 import { cn } from "@/shared/lib/utils";
@@ -19,6 +19,8 @@ interface Props {
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
     const { data: session } = useSession();
+
+    console.log(session, 999);
 
     return (
         <header className={cn('border-b', className)}>
