@@ -4,23 +4,22 @@ import React from "react";
 import { cn } from "@/shared/lib/utils";
 import { Container } from "./container";
 import Image from "next/image";
-import { Button } from "../ui";
-import {User} from 'lucide-react';
 import Link from "next/link";
 import { SearchInput } from "./search-input";
 import { CartButton } from "./cart-button";
-import { useSession, signIn } from "next-auth/react";
+import { useSession} from "next-auth/react";
+import { ProfileButton } from "./profile-button";
+import { AuthModal } from "./modals";
 
 interface Props {
-    hasSearch?: boolean;
+    hasSearch?: boolean; 
     hasCart?: boolean;
     className?: string;
 }
 
 export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, className }) => {
     const { data: session } = useSession();
-
-    console.log(session, 999);
+    const [openAuthModal, setOpenAuthModal] = React.useState(false);
 
     return (
         <header className={cn('border-b', className)}>
@@ -45,16 +44,9 @@ export const Header: React.FC<Props> = ({ hasSearch = true, hasCart = true, clas
 
                 {/* Правая часть */}
                 <div className="flex items-center gap-3">
-                    <Button
-                        onClick={() => signIn('github', {
-                            callbackUrl: '/',
-                            redirect: true,
-                        })}
-                        variant="outline"
-                        className="flex items-center gap-1">
-                        <User size={16} />
-                        Войти
-                    </Button>
+                    <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)} />
+
+                    <ProfileButton onCLiclkSignIn={() => setOpenAuthModal(true)} />
 
                     {hasCart && <CartButton />}
                 </div>
