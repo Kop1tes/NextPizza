@@ -1,14 +1,20 @@
-'use client';
-
-import { useSession } from "next-auth/react"
+import { prisma } from "@/prisma/prisma-client";
+import { ProfileForm } from "@/shared/components";
+import { getUserSession } from "@/shared/lib/get-user-session";
 import { redirect } from "next/navigation";
 
-export default  function ProfitPage() {
-    const { data: session } = useSession();
+export default async function ProfitPage() {
+    const session = await getUserSession();
 
     if (!session) {
         return redirect('/not-auth');
     }
 
-    return <div>Это твой профиль</div>;
+    const user = await prisma.user.findFirst({ where: { id: Number(session?.id) } });
+
+    if (!user) {
+        return redirect('/not-auth');
+    }
+
+    return <ProfileForm data={user} />;
 }

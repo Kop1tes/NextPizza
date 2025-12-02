@@ -26,6 +26,8 @@ export { ErrorText } from './error-text';
 export { ClearButton } from './clear-button';
 export { AddressAutocomplete } from './address-autocomplete';
 export { ProfileButton } from './profile-button';
+export { InfoBlock } from './info-block';
+export { ProfileForm } from './profile-form';
 export * from './email-templates';
 export * from './checkout';
 export * from './form';
