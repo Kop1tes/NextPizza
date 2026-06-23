@@ -80,6 +80,8 @@ export async function createOrder(data:CheckoutFormValues) {
             totalAmount: order.totalAmount,
             paymentUrl: 'https://github.com/Kop1tes',
         }));
+
+        return 'https://github.com/Kop1tes';
     } catch (error) {
         console.log('[CreateOrder] Server error', error)
     }
